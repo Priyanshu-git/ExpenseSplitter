@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.creategroup
+package com.nexxlabs.expensesplitter.ui.screens.creategroup
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

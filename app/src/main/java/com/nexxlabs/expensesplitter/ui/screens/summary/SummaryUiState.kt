@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.summary
+package com.nexxlabs.expensesplitter.ui.screens.summary
 
 data class SummaryUiState(
     val balances: List<MemberBalanceItem> = emptyList(),

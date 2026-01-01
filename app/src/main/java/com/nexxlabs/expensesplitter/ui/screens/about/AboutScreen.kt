@@ -1,7 +1,9 @@
-package com.nexxlabs.expensesplitter.ui.privacy
+package com.nexxlabs.expensesplitter.ui.screens.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -18,11 +20,11 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PrivacyPolicyScreen(onBack: () -> Unit) {
+fun AboutScreen(onBack: () -> Unit) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Privacy Policy") },
+                title = { Text("About") },
                 navigationIcon = {
                     IconButton(onClick = onBack) {
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back")
@@ -39,15 +41,14 @@ fun PrivacyPolicyScreen(onBack: () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
             Text(
-                text = "Privacy Policy",
+                text = "Expense Splitter",
                 style = MaterialTheme.typography.titleLarge
             )
-
-            Text("• This app works completely offline.")
-            Text("• No personal data is collected.")
-            Text("• No internet connection is used.")
-            Text("• No analytics or tracking SDKs.")
-            Text("• All data remains on your device.")
+            Text("A simple, offline expense splitting app.")
+            Text("No login. No internet. No data collection.")
+            Spacer(modifier = Modifier.height(8.dp))
+            Text("Developed by NexxLabs")
+            Text("Version 1.0.0")
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.addexpense
+package com.nexxlabs.expensesplitter.ui.screens.addexpense
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

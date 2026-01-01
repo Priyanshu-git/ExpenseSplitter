@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.settings
+package com.nexxlabs.expensesplitter.ui.screens.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

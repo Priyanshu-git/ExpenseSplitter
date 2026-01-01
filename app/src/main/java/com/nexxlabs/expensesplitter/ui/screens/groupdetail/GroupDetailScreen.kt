@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.groupdetail
+package com.nexxlabs.expensesplitter.ui.screens.groupdetail
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box

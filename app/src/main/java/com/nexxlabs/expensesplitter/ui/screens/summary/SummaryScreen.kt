@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.summary
+package com.nexxlabs.expensesplitter.ui.screens.summary
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues

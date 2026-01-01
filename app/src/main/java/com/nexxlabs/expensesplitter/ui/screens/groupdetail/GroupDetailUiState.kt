@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.groupdetail
+package com.nexxlabs.expensesplitter.ui.screens.groupdetail
 
 data class GroupDetailUiState(
     val groupName: String = "",

@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.creategroup
+package com.nexxlabs.expensesplitter.ui.screens.creategroup
 
 data class CreateGroupUiState(
     val groupName: String = "",

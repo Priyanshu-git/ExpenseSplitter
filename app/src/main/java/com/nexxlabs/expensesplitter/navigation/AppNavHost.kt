@@ -5,14 +5,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.nexxlabs.expensesplitter.ui.about.AboutScreen
-import com.nexxlabs.expensesplitter.ui.addexpense.AddExpenseScreen
-import com.nexxlabs.expensesplitter.ui.creategroup.CreateGroupScreen
-import com.nexxlabs.expensesplitter.ui.groupdetail.GroupDetailScreen
-import com.nexxlabs.expensesplitter.ui.home.HomeScreen
-import com.nexxlabs.expensesplitter.ui.privacy.PrivacyPolicyScreen
-import com.nexxlabs.expensesplitter.ui.settings.SettingsScreen
-import com.nexxlabs.expensesplitter.ui.summary.SummaryScreen
+import com.nexxlabs.expensesplitter.ui.screens.about.AboutScreen
+import com.nexxlabs.expensesplitter.ui.screens.addexpense.AddExpenseScreen
+import com.nexxlabs.expensesplitter.ui.screens.creategroup.CreateGroupScreen
+import com.nexxlabs.expensesplitter.ui.screens.groupdetail.GroupDetailScreen
+import com.nexxlabs.expensesplitter.ui.screens.home.HomeScreen
+import com.nexxlabs.expensesplitter.ui.screens.privacy.PrivacyPolicyScreen
+import com.nexxlabs.expensesplitter.ui.screens.settings.SettingsScreen
+import com.nexxlabs.expensesplitter.ui.screens.summary.SummaryScreen
 
 @Composable
 fun AppNavHost(

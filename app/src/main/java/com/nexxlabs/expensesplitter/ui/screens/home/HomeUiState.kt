@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.home
+package com.nexxlabs.expensesplitter.ui.screens.home
 
 data class HomeUiState(
     val groups: List<GroupItem> = emptyList(),

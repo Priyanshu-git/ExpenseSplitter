@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.settings
+package com.nexxlabs.expensesplitter.ui.screens.settings
 
 import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement

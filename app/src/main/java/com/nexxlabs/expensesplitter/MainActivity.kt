@@ -9,7 +9,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.nexxlabs.expensesplitter.navigation.AppNavHost
-import com.nexxlabs.expensesplitter.ui.settings.ThemeMode
+import com.nexxlabs.expensesplitter.ui.screens.settings.ThemeMode
 import com.nexxlabs.expensesplitter.ui.theme.AppThemeViewModel
 import com.nexxlabs.expensesplitter.ui.theme.ExpenseSplitterTheme
 import dagger.hilt.android.AndroidEntryPoint

@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.home
+package com.nexxlabs.expensesplitter.ui.screens.home
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement

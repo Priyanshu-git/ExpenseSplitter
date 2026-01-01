@@ -1,4 +1,4 @@
-package com.nexxlabs.expensesplitter.ui.summary
+package com.nexxlabs.expensesplitter.ui.screens.summary
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
