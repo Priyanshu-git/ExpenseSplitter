@@ -49,12 +49,7 @@ class MainActivity : ComponentActivity() {
                         is UiEvent.StartIntent -> {
                             startActivity(Intent.createChooser(event.intent, event.title))
                         }
-                        UiEvent.Idle -> {}
                     }
-
-                    // Reset the event to Idle
-                    if (event != UiEvent.Idle)
-                        uiEventDispatcher.emit(UiEvent.Idle)
                 }
             }
 

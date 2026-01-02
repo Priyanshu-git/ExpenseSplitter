@@ -43,7 +43,10 @@ fun CreateGroupScreen(
 ) {
     val state by viewModel.uiState.collectAsState()
 
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)
+    ) {
 
         // Header
         Box(
@@ -79,7 +82,11 @@ fun CreateGroupScreen(
         ) {
 
             // Group name
-            Text("Group Name", style = MaterialTheme.typography.labelLarge)
+            Text(
+                "Group Name",
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
 
             OutlinedTextField(
                 value = state.groupName,
@@ -91,7 +98,10 @@ fun CreateGroupScreen(
             )
 
             // Currency (static for now)
-            Text("Currency", style = MaterialTheme.typography.labelLarge)
+            Text(
+                "Currency", style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onBackground
+            )
 
             OutlinedTextField(
                 value = "₹ INR - Indian Rupee",
@@ -106,7 +116,8 @@ fun CreateGroupScreen(
             // Members
             Text(
                 "Members (minimum 2)",
-                style = MaterialTheme.typography.labelLarge
+                style = MaterialTheme.typography.labelLarge,
+                color = MaterialTheme.colorScheme.onBackground
             )
 
             Row(
@@ -132,7 +143,7 @@ fun CreateGroupScreen(
                     Icon(
                         Icons.Default.Add,
                         contentDescription = "Add member",
-                        tint = MaterialTheme.colorScheme.onPrimary
+                        tint = MaterialTheme.colorScheme.onSurface
                     )
                 }
             }

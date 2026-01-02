@@ -32,7 +32,7 @@ class CreateGroupViewModel @Inject constructor(
     fun addMember() {
         val name = _uiState.value.memberInput.trim()
         if (name.isEmpty()) return
-        if (_uiState.value.members.contains(name)){
+        if (_uiState.value.members.any { it.equals(name, ignoreCase = true) }){
             viewModelScope.launch {
                 uiEventDispatcher.emit(UiEvent.ShowToast("Member already added"))
             }
