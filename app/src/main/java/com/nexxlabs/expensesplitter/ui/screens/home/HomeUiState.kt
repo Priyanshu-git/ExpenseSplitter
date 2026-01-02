@@ -8,5 +8,7 @@ data class HomeUiState(
 data class GroupItem(
     val id: Long,
     val name: String,
-    val totalExpense: String // formatted, e.g. "₹2,450"
+    val memberCount: Int,
+    val expenseCount: Int,
+    val totalExpense: String
 )

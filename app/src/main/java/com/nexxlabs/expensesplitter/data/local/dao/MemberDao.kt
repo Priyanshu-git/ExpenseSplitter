@@ -14,4 +14,8 @@ interface MemberDao {
 
     @Insert
     suspend fun insertAll(members: List<MemberEntity>)
+
+    @Query("SELECT COUNT(*) FROM members WHERE groupId = :groupId")
+    suspend fun getMemberCount(groupId: Long): Int
+
 }

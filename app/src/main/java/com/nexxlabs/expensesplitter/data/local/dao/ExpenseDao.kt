@@ -17,4 +17,11 @@ interface ExpenseDao {
 
     @Query("DELETE FROM expenses WHERE id = :expenseId")
     suspend fun delete(expenseId: Long)
+
+    @Query("SELECT COUNT(*) FROM expenses WHERE groupId = :groupId")
+    suspend fun getExpenseCount(groupId: Long): Int
+
+    @Query("SELECT IFNULL(SUM(amount), 0) FROM expenses WHERE groupId = :groupId")
+    suspend fun getTotalExpense(groupId: Long): Double
+
 }

@@ -1,19 +1,27 @@
 package com.nexxlabs.expensesplitter.data.repository
 
+import com.nexxlabs.expensesplitter.data.local.dao.ExpenseDao
 import com.nexxlabs.expensesplitter.data.local.dao.GroupDao
 import com.nexxlabs.expensesplitter.data.local.dao.MemberDao
 import com.nexxlabs.expensesplitter.data.local.entity.GroupEntity
 import com.nexxlabs.expensesplitter.data.local.entity.MemberEntity
+import com.nexxlabs.expensesplitter.data.repository.model.GroupSummary
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class GroupRepository @Inject constructor(
     private val groupDao: GroupDao,
-    private val memberDao: MemberDao
+    private val memberDao: MemberDao,
+    private val expenseDao: ExpenseDao
 ) {
 
     fun observeGroups(): Flow<List<GroupEntity>> =
         groupDao.observeGroups()
+
+    fun observeGroupSummaries(): Flow<List<GroupSummary>> {
+        return groupDao.observeGroupSummaries()
+    }
+
 
     suspend fun createGroup(
         name: String,

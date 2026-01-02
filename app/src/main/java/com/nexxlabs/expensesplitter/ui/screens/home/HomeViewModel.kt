@@ -16,13 +16,15 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val uiState: StateFlow<HomeUiState> =
-        groupRepository.observeGroups()
-            .map { groups ->
-                val items = groups.map {
+        groupRepository.observeGroupSummaries()
+            .map { summaries ->
+                val items = summaries.map {
                     GroupItem(
-                        id = it.id,
-                        name = it.name,
-                        totalExpense = "₹0" // will be calculated later
+                        id = it.groupId,
+                        name = it.groupName,
+                        memberCount = it.memberCount,
+                        expenseCount = it.expenseCount,
+                        totalExpense = "%.2f".format(it.totalExpense)
                     )
                 }
 
