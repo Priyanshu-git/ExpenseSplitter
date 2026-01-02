@@ -1,31 +1,36 @@
 package com.nexxlabs.expensesplitter.ui.screens.settings
 
-import android.content.Intent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.nexxlabs.expensesplitter.R
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
     onBack: () -> Unit,
@@ -36,72 +41,93 @@ fun SettingsScreen(
     val themeMode by viewModel.themePreferences.themeMode.collectAsState(
         initial = ThemeMode.SYSTEM
     )
-    val context = LocalContext.current
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Settings") },
-                navigationIcon = {
-                    IconButton(onClick = onBack) {
-                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
-                    }
+    val painterImg = when(themeMode){
+        ThemeMode.SYSTEM -> if (isSystemInDarkTheme()) painterResource(R.drawable.moon) else painterResource(R.drawable.sun)
+        ThemeMode.LIGHT -> painterResource(R.drawable.sun)
+        ThemeMode.DARK -> painterResource(R.drawable.moon)
+    }
+
+    Column(modifier = Modifier.fillMaxSize()
+        .background(MaterialTheme.colorScheme.background)
+    ) {
+
+        // Top header (same pattern as other screens)
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .statusBarsPadding()
+                .clip(RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp))
+                .background(MaterialTheme.colorScheme.primary)
+                .padding(16.dp)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                IconButton(onClick = onBack) {
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
                 }
-            )
+                Text(
+                    text = "Settings",
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.onPrimary
+                )
+            }
         }
-    ) { padding ->
 
         Column(
             modifier = Modifier
-                .padding(padding)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            Text("Theme", style = MaterialTheme.typography.titleMedium)
-
-            ThemeMode.values().forEach { mode ->
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    RadioButton(
-                        selected = themeMode == mode,
-                        onClick = { viewModel.setTheme(mode) }
-                    )
-                    Text(
-                        text = when (mode) {
-                            ThemeMode.SYSTEM -> "Follow system"
-                            ThemeMode.LIGHT -> "Light"
-                            ThemeMode.DARK -> "Dark"
-                        }
-                    )
-                }
-            }
-
-            HorizontalDivider()
-
-            TextButton(onClick = {
-                val intent = Intent(Intent.ACTION_SEND).apply {
-                    type = "text/plain"
-                    putExtra(
-                        Intent.EXTRA_TEXT,
-                        "Check out Expense Splitter:\nhttps://play.google.com/store/apps/details?id=com.nexxlabs.expensesplitter"
-                    )
-                }
-                context.startActivity(
-                    Intent.createChooser(intent, "Share App")
+            // App Theme
+            SettingsCard(
+                icon = painterImg,
+                iconBackground = Color(0xFFE7F0FF),
+                iconTint = MaterialTheme.colorScheme.primary,
+                title = "App Theme",
+                subtitle = "Choose how the app looks"
+            ) {
+                ThemeDropdown(
+                    selected = themeMode,
+                    onSelected = viewModel::setTheme
                 )
-            }) {
-                Text("Share App")
             }
 
-            TextButton(onClick = onOpenAbout) {
-                Text("About")
-            }
+            // Share App
 
-            TextButton(onClick = onOpenPrivacy) {
-                Text("Privacy Policy")
-            }
+            SettingsCard(
+                icon = painterResource(R.drawable.share),
+                iconBackground = Color(0xFFE6F8ED),
+                iconTint = Color(0xFF22C55E),
+                title = "Share App",
+                subtitle = "Tell your friends about this app",
+                onClick = { viewModel.shareApp() }
+            )
+
+            // About Us
+            SettingsCard(
+                icon = painterResource(R.drawable.info),
+                iconBackground = Color(0xFFF3E8FF),
+                iconTint = Color(0xFF8B5CF6),
+                title = "About Us",
+                subtitle = "Learn more about this app",
+                onClick = onOpenAbout
+            )
+
+            // Privacy Policy
+            SettingsCard(
+                icon = painterResource(R.drawable.info),
+                iconBackground = Color(0xFFFFEDD5),
+                iconTint = Color(0xFFF97316),
+                title = "Privacy Policy",
+                subtitle = "How we handle your data",
+                onClick = onOpenPrivacy
+            )
         }
     }
 }

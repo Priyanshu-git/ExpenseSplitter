@@ -1,5 +1,6 @@
 package com.nexxlabs.expensesplitter
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -45,7 +46,15 @@ class MainActivity : ComponentActivity() {
                             Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_SHORT)
                                 .show()
                         }
+                        is UiEvent.StartIntent -> {
+                            startActivity(Intent.createChooser(event.intent, event.title))
+                        }
+                        UiEvent.Idle -> {}
                     }
+
+                    // Reset the event to Idle
+                    if (event != UiEvent.Idle)
+                        uiEventDispatcher.emit(UiEvent.Idle)
                 }
             }
 
