@@ -222,7 +222,7 @@ private fun GroupCard(
             ) {
                 Column(modifier = Modifier
                     .weight(1f)
-                    .padding(16.dp)) {
+                    .padding(start = 16.dp, end = 4.dp, top = 16.dp, bottom = 16.dp)) {
                     Text(
                         group.name,
                         style = MaterialTheme.typography.titleMedium
@@ -266,7 +266,7 @@ private fun GroupCard(
 
                 Column(
                     horizontalAlignment = Alignment.End,
-                    modifier = Modifier.padding(4.dp)
+                    modifier = Modifier.padding(start = 4.dp, end = 8.dp, top = 16.dp, bottom = 16.dp)
                 ) {
                     Text(
                         "Total",
