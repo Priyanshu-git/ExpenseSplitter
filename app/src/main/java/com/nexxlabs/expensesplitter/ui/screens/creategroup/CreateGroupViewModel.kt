@@ -3,65 +3,80 @@ package com.nexxlabs.expensesplitter.ui.screens.creategroup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nexxlabs.expensesplitter.data.repository.GroupRepository
+import com.nexxlabs.expensesplitter.ui.common.UiEvent
+import com.nexxlabs.expensesplitter.ui.common.UiEventDispatcher
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class CreateGroupViewModel @Inject constructor(
-    private val groupRepository: GroupRepository
+    private val groupRepository: GroupRepository,
+    private val uiEventDispatcher: UiEventDispatcher
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(CreateGroupUiState())
     val uiState: StateFlow<CreateGroupUiState> = _uiState
 
-    fun onGroupNameChange(name: String) {
-        _uiState.value = _uiState.value.copy(groupName = name)
+    fun onGroupNameChange(value: String) {
+        _uiState.update { it.copy(groupName = value) }
     }
 
-    fun onMemberNameChange(index: Int, name: String) {
-        val updated = _uiState.value.members.toMutableList()
-        updated[index] = name
-        _uiState.value = _uiState.value.copy(members = updated)
+    fun onMemberInputChange(value: String) {
+        _uiState.update { it.copy(memberInput = value) }
     }
 
     fun addMember() {
-        _uiState.value =
-            _uiState.value.copy(members = _uiState.value.members + "")
-    }
-
-    fun removeMember(index: Int) {
-        val updated = _uiState.value.members.toMutableList()
-        updated.removeAt(index)
-        _uiState.value = _uiState.value.copy(members = updated)
-    }
-
-    fun saveGroup(onSuccess: () -> Unit) {
-        val state = _uiState.value
-        val validMembers = state.members.map { it.trim() }.filter { it.isNotEmpty() }
-
-        if (state.groupName.isBlank()) {
-            _uiState.value = state.copy(error = "Group name cannot be empty")
+        val name = _uiState.value.memberInput.trim()
+        if (name.isEmpty()) return
+        if (_uiState.value.members.contains(name)){
+            viewModelScope.launch {
+                uiEventDispatcher.emit(UiEvent.ShowToast("Member already added"))
+            }
             return
         }
 
-        if (validMembers.size < 2) {
-            _uiState.value = state.copy(error = "Add at least two members")
+        _uiState.update {
+            it.copy(
+                members = it.members + name,
+                memberInput = ""
+            )
+        }
+    }
+
+    fun removeMember(name: String) {
+        _uiState.update {
+            it.copy(members = it.members - name)
+        }
+    }
+
+    fun createGroup(onSuccess: () -> Unit) {
+        val state = _uiState.value
+
+        if (state.groupName.isBlank()) {
+            _uiState.update { it.copy(error = "Group name is required") }
+            return
+        }
+
+        if (state.members.size < 2) {
+            _uiState.update { it.copy(error = "Add at least 2 members") }
             return
         }
 
         viewModelScope.launch {
-            _uiState.value = state.copy(isSaving = true, error = null)
+            _uiState.update { it.copy(isSaving = true, error = null) }
 
             groupRepository.createGroup(
                 name = state.groupName.trim(),
-                currency = "INR",
-                memberNames = validMembers
+                currency = state.currency,
+                memberNames = state.members
             )
 
             onSuccess()
         }
     }
 }
+
